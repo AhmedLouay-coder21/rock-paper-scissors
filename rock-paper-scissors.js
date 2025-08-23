@@ -11,6 +11,10 @@ function getHumanChoice()
 {
     //ask user to enter one of “rock”, “paper” or “scissors”
     let userInput = prompt("Enter your desired weapon");
+    if(userInput == null)
+    {
+        throw new Error("You wanna leave me so soon? what about the rock, paper and scissors? tell them you are going to buy some milk?");;
+    }
     // for debugging purposes
     console.log(userInput);
     userInput = userInput.toLowerCase();
@@ -21,9 +25,14 @@ function checkUserInput (userInput)
     // declare the string domain
     const string = ["rock", "paper", "scissors"];
     // if the user didn't enter anything or entered something unexpected ask him again for a prompt
-    while(userInput === null || userInput === '' || !string.includes(userInput.toLowerCase()))
+    while(userInput === "" || !string.includes(userInput.toLowerCase()))
     {
         userInput = prompt("Another One!");
+        //if the user clicked cancel throw a custom error
+        if(userInput == null)
+        {
+            throw new Error("You wanna leave me so soon? what about the rock, paper and scissors? tell them you are going to buy some milk?");;
+        }
     }
     return userInput;
 }
@@ -35,7 +44,7 @@ function playRound (getComputerChoice,checkUserInput)
     let computerChoice = getComputerChoice();
     // getting human's choice from getHumanChoice function
     let humanChoice = checkUserInput(getHumanChoice());
-    // comparing the two choices
+    // comparing the two choices with all possible possibilities
     if(computerChoice == "rock" && humanChoice == "scissors")
     {
         computerScore++;
@@ -71,3 +80,38 @@ function playRound (getComputerChoice,checkUserInput)
         console.log("It's a tie!, who would've thought that?");
     }
 }
+function playGame (playRound, getComputerChoice, checkUserInput)
+{
+    //make it a five rounds game
+    let i = 5;
+    // while the round isn't over and the user didn't cancel keep the game on.
+    while ( i > 0)
+    {
+        playRound(getComputerChoice,checkUserInput);
+        i--;
+    }
+    //compare the scores to see who won.
+    if (computerScore > humanScore)
+    {
+        if (confirm("how did that thing beat you? wanna try again?"))
+        {
+            playGame(playRound, getComputerChoice, checkUserInput);
+        }
+    }
+    else if (computerScore < humanScore)
+    {
+        if (confirm("I guess that this thing can only sing daisy bell, wanna beat him up again?"))
+        {
+            playGame(playRound, getComputerChoice, checkUserInput);
+        }
+    }
+    else
+    {
+        if (confirm("It's a tie, that was unpredictable, wanna see what happens next time?"))
+        {
+            playGame(playRound, getComputerChoice, checkUserInput);
+        }
+    }
+}
+//run the game
+playGame(playRound, getComputerChoice, checkUserInput);
