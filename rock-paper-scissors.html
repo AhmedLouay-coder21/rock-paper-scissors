@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
-    <script src="javascript.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors</title>
+  <!-- Removed the <script src> so it doesn't run -->
 </head>
-<body style="background-image: url('RockPaperScissor-2880x1620_Lede.jpg'); background-size: cover;">
-    <h1 style="text-align: center; color: white; line-height: 750px;">press shift + ctrl + j to open you console, then paste the code and click enter to play</h1>
+<body style="background-image: url('RockPaperScissor-2880x1620_Lede.jpg'); background-size: cover; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+  <h1 style="text-align: center; color: white; margin-bottom: 20px;">
+    Press <b>Shift + Ctrl + J</b> to open your console, then paste the code and hit Enter to play
+  </h1>
+
+    <button id="copyButton" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+    Copy Game Code
+  </button>
 </body>
+
+<script>
+  const copyButton = document.getElementById('copyButton');
+
+  copyButton.addEventListener('click', async () => {
+    try {
+      // Fetch the JS file instead of running it
+      const response = await fetch('rock-paper-scissors.js');
+      const jsCode = await response.text();
+
+      // Copy content to clipboard
+      await navigator.clipboard.writeText(jsCode);
+      alert('Game code copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+      alert('Error copying code');
+    }
+  });
+</script>
 </html>

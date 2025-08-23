@@ -2,7 +2,7 @@
 
 A simple Rock–Paper–Scissors game you can play in the browser console.
 # Steps to play the game
-This game is fully made by javascript language, and to play the game follow the following steps:
+This game is made by javascript and html, and to play the game follow the following steps:
 1- Copy the code in rock-paper-scissors.js file.
 2- Click ctrl + shift + j on chrome.
 3- Paste it in the console using ctrl + v or using the mouse.
