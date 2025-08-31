@@ -20,22 +20,6 @@ function getHumanChoice()
     userInput = userInput.toLowerCase();
     return userInput;
 }
-function checkUserInput (userInput)
-{
-    // declare the string domain
-    const string = ["rock", "paper", "scissors"];
-    // if the user didn't enter anything or entered something unexpected ask him again for a prompt
-    while(userInput === "" || !string.includes(userInput.toLowerCase()))
-    {
-        userInput = prompt("Another One!");
-        //if the user clicked cancel throw a custom error
-        if(userInput == null)
-        {
-            throw new Error("You wanna leave me so soon? what about the rock, paper and scissors? tell them you are going to buy some milk?");;
-        }
-    }
-    return userInput;
-}
 let humanScore = 0;
 let computerScore = 0;
 function playRound (getComputerChoice,checkUserInput)
