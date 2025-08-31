@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('RockPaperScissor-2880x1620_Lede.jpg');
+    background-size: cover;
+}
+.buttons
+{
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+button
+{
+    height: 100px;
+    border-radius: 10px;
+    width: 200px;
+}
