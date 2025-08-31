@@ -14,15 +14,19 @@ function getHumanChoice()
     let buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
         button.addEventListener("click", function() {
-            message.remove();
-        let userInput = this.id;
-        playRound(userInput);
+        // reset all buttons to default before coloring new one
+        buttons.forEach(btn => btn.style.backgroundColor = "");
+            if (roundsLeft > 0) {
+                let userInput = this.id;
+                playRound(userInput, this);
+            }
       });
     });
 }
 let humanScore = 0;
 let computerScore = 0;
-function playRound (userInput)
+let roundsLeft = 5;  // total rounds
+function playRound (userInput, clickedButton)
 {
     // getting computer's choice from getComputerChoice function
     let computerChoice = getComputerChoice();
@@ -34,38 +38,74 @@ function playRound (userInput)
     {
         computerScore++;
         message.textContent = "You lose! rock always beats scissors!";
+        clickedButton.style.cssText = 'background-color: red';
     }
     else if (computerChoice == "rock" && humanChoice == "paper")
     {
         humanScore++;
         message.textContent = "You won! and paper always beats rock";
+        clickedButton.style.cssText = 'background-color: green';
     }
     else if (computerChoice == "scissors" && humanChoice == "rock")
     {
         humanScore++;
         message.textContent = "You won! you are ROCKING!";
+        clickedButton.style.cssText = 'background-color: green';
     }
     else if (computerChoice == "scissors" && humanChoice == "paper")
     {
         computerScore++;
         message.textContent = "auh you lost, you could've won that!";
+        clickedButton.style.cssText = 'background-color: red';
     }
     else if (computerChoice == "paper" && humanChoice == "scissors")
     {
         humanScore++;
-        message.textContent = "You win, FATALITY!";
+        message.textContent = "You won, FATALITY!";
+        clickedButton.style.cssText = 'background-color: green';
     }
     else if (computerChoice == "paper" && humanChoice == "rock")
     {
         computerScore++;
         message.textContent = "You lost,He folded you like a paper!";
+        clickedButton.style.cssText = 'background-color: red';
     }
     else
     {
         message.textContent = "It's a tie!, who would've thought that?";
+        clickedButton.style.cssText = 'background-color: yellow';
     }
     body = document.querySelector("body");
     document.body.prepend(message);
+    // Delay 1 second before clearing button colors
+    setTimeout(() => {
+        document.querySelectorAll('button').forEach(btn => btn.style.backgroundColor = "");
+        message.remove();
+    }, 1000);
+    roundsLeft--;
+
+    if (roundsLeft === 0) {
+        setTimeout(() => {
+            if (humanScore > computerScore) {
+                alert(`Game Over! You win ${humanScore} to ${computerScore}`);
+            } else if (computerScore > humanScore) {
+                alert(`Game Over! Computer wins ${computerScore} to ${humanScore}`);
+            } else {
+                alert(`Game Over! It's a tie ${humanScore} to ${computerScore}`);
+            }
+            // reset for a new game
+            humanScore = 0;
+            computerScore = 0;
+            roundsLeft = 5;
+            message.textContent = "New game started! Choose Rock, Paper, or Scissors.";
+            // reset all buttons back to default
+            document.querySelectorAll('button').forEach(btn => btn.style.backgroundColor = "");
+        }, 200); // small delay so last message shows before alert
+    }
+}
+function playGame ()
+{
+    getHumanChoice();
 }
 //run the game
-getHumanChoice();
+playGame();
