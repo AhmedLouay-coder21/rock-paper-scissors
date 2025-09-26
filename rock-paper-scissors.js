@@ -28,6 +28,10 @@ let computerScore = 0;
 let roundsLeft = 5;  // total rounds
 function playRound (userInput, clickedButton)
 {
+    //disable all buttons to prevent the player from choosing until the text is gone after every click
+    let buttons = document.querySelectorAll('button');
+    buttons.forEach(btn => btn.disabled = true);
+
     // getting computer's choice from getComputerChoice function
     let computerChoice = getComputerChoice();
     // getting human's choice from getHumanChoice function
@@ -81,7 +85,12 @@ function playRound (userInput, clickedButton)
     setTimeout(() => {
         document.querySelectorAll('button').forEach(btn => btn.style.backgroundColor = "");
         message.remove();
-    }, 1000);
+        //re color the buttons to transparent to acknowledge the player that he cant psh them, then re enable the buttons after the timeout is off.
+        document.querySelectorAll('button').forEach(btn => {
+            btn.style.backgroundColor = "";
+            btn.disabled = false; // Re-enable buttons here
+        });
+    }, 2000);
     roundsLeft--;
 
     if (roundsLeft === 0) {
